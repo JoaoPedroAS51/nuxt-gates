@@ -1,6 +1,7 @@
 import { resolve } from 'path'
 import { fileURLToPath } from 'url'
 import { defineNuxtModule, addPlugin, addAutoImport } from '@nuxt/kit'
+import { name, version } from '../package.json'
 
 export interface ModuleOptions {
   persistent: boolean
@@ -9,7 +10,8 @@ export interface ModuleOptions {
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: 'gates-module',
+    name,
+    version,
     configKey: 'gates'
   },
   defaults: {
@@ -21,6 +23,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
     nuxt.options.build.transpile.push(runtimeDir)
+
     addPlugin(resolve(runtimeDir, 'plugin'))
 
     addAutoImport({
